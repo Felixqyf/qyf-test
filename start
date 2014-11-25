@@ -1,0 +1,7 @@
+void start()/*是否开始游戏*/
+{
+  settextstyle(4,0,5);
+  outtextxy(80,240,"GAME START!");
+  settextstyle(3,0,3);
+  outtextxy(120,340,"ESC-exit/press any key to continue");
+}
