@@ -1,0 +1,24 @@
+void chessboard()/*画棋盘*/
+{
+    int i,j ;
+    setbkcolor(WHITE);
+   cleardevice();										
+    for (i = 40; i <= 440; i = i + 20)							/*设置起始点120，终止点400，表格宽度40*/
+    for (j = 40; j <= 440; j++)
+    {
+	putpixel(i,j,8);							
+	putpixel(j,i,8);
+    }
+    setcolor(8);
+ setlinestyle(1,0,1);
+rectangle(32,32,448,448);
+}
+
+void draw_circle(int x,int y,int color)/*画棋子*/
+{
+    setcolor(color);
+    setlinestyle(SOLID_LINE,0,1);
+    x=(x+2)*20 ;
+    y=(y+2)*20 ;
+    circle(x,y,8);
+}
