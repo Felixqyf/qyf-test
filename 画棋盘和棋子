@@ -22,3 +22,14 @@ void draw_circle(int x,int y,int color)/*画棋子*/
     y=(y+2)*20 ;
     circle(x,y,8);
 }
+
+void draw_pixel(int x,int y,int color)/*画点，棋走过所留下的点*/
+{
+    x=(x+2)*20;
+    y=(y+2)*20;
+    {putpixel(x+8,y,color);
+    putpixel(x,y-8,color);
+    putpixel(x,y+8,color);
+    putpixel(x-8,y,color);
+}
+}
