@@ -1,0 +1,90 @@
+int result(int x,int y)/*判断两种颜色的棋在不同方向的个数是否到达5个*/
+{
+    int j,k,n1,n2 ;
+    while(1)
+    {
+          /*左上方*/
+        n1=0 ;
+        n2=0 ;
+        for(j=x,k=y;j>=1&&k>=1;j--,k--)
+        {
+	    if(chess[j][k]==flag)
+            n1++;
+            else
+            break ;
+        }
+        /*右下方*/
+        for(j=x,k=y;j<=19&&k<=19;j++,k++)
+        {
+            if(chess[j][k]==flag)
+            n2++;
+            else
+            break ;
+        }
+        if(n1+n2-1>=5)
+            return(1);
+
+        /*右上方*/
+        n1=0 ;
+        n2=0 ;
+        for(j=x,k=y;j<=19&&k>=1;j++,k--)
+        {
+            if(chess[j][k]==flag)
+            n1++;
+            else
+            break ;
+        }
+        /*左下方*/
+        for(j=x,k=y;j>=1&&k<=19;j--,k++)
+        {
+            if(chess[j][k]==flag)
+            n2++;
+            else
+            break ;
+        }
+        if(n1+n2-1>=5)
+		return(1);
+	n1=0 ;
+        n2=0 ;
+        /*水平向左*/
+        for(j=x,k=y;j>=1;j--)
+        {
+            if(chess[j][k]==flag)
+            n1++;
+            else
+            break ;
+        }
+        /*水平向右*/
+        for(j=x,k=y;j<=19;j++)
+        {
+            if(chess[j][k]==flag)
+            n2++;
+            else
+            break ;
+        }
+        if(n1+n2-1>=5)
+	    return(1);
+
+        /*垂直向上*/
+        n1=0 ;
+        n2=0 ;
+        for(j=x,k=y;k>=1;k--)
+        {
+            if(chess[j][k]==flag)
+            n1++;
+            else
+            break ;
+        }
+        /*垂直向下*/
+        for(j=x,k=y;k<=19;k++)
+        {
+            if(chess[j][k]==flag)
+            n2++;
+            else
+            break ;
+        }
+        if(n1+n2-1>=5)
+            return(1);
+        return(0);
+    }
+}
