@@ -1,0 +1,31 @@
+void main()
+{
+    int gdriver=DETECT,gmode;
+    initgraph(&gdriver,&gmode,"");/*图形界面初始化*/
+    start();/*调用start()*/
+    key=bioskey(0);/*接收键盘按键*/
+    if(key==ESC)/*按ESC退出游戏*/
+    exit(0);
+    else
+    {
+      cleardevice();
+    	flag=1 ;/*设置flag初始值*/
+      chessboard();/*画棋盘*/
+      do
+      {
+          	if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
+          	draw_circle(chessx,chessy,BLUE);
+          	else
+          		  draw_circle(chessx,chessy,RED);
+            do
+          	{
+                while(bioskey(1)==0);
+                key=bioskey(0);/*接收键盘按键*/
+          	    play();/*调用play函数，进行五子棋游戏*/
+            }
+            while(key!=SPACE&&key!=ESC);/*当为ESC或空格时退出循环*/
+        }
+        while(key!=ESC);
+        closegraph();/*退出图形界面*/
+    }
+}
