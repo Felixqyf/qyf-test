@@ -72,7 +72,12 @@ void play()/*五子棋游戏过程*/
         {
 	          for(i=chessx-1,j=chessy;i>=1;i--)
 	          if(chess[i][j]==0)
-            if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
+            	  {
+		  		draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
+	  	                draw_pixel(chessx,chessy,8);
+                  	        break ;
+                 }
+            	 if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
 		              draw_circle(chessx,chessy,BLUE);
 	          else
 		              draw_circle(chessx,chessy,RED);
