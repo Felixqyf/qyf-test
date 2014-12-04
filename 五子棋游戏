@@ -106,15 +106,15 @@ void play()/*五子棋游戏过程*/
             break ;
         else
         {
-	          for(i=chessx,j=chessy+1;j<=19;j++)
+	    for(i=chessx,j=chessy+1;j<=19;j++)
             if(chess[i][j]==0)
             {
 		              draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
 		              draw_pixel(chessx,chessy,8);
                   break ;
             }
-	          if(j>19)break ;
-                  chessy=j ;
+	    if(j>19)break ;
+            chessy=j ;
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
 		              draw_circle(chessx,chessy,BLUE);
 	          else
