@@ -87,13 +87,19 @@ void play()/*五子棋游戏过程*/
         }
 	      break;
         case RIGHT :
-	      if(chessx+1>19)/*判断向右走是否出了棋盘*/
-            break ;
+	        if(chessx+1>19)/*判断向右走是否出了棋盘*/
+              		break ;
         else
         {
-	          for(i=chessx+1,j=chessy;i<=19;i++)
-	          if(i>19)
-	              break ;
+	        for(i=chessx+1,j=chessy;i<=19;i++)
+	        if(chess[i][j]==0)
+                {
+	                draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
+			draw_pixel(chessx,chessy,8);
+	                break ;
+                }
+	        if(i>19)
+	        	break ;
             chessx=i ;
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
 		            draw_circle(chessx,chessy,BLUE);
