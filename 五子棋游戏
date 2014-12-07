@@ -102,8 +102,8 @@ void play()/*五子棋游戏过程*/
 	        	break ;
             chessx=i ;
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
-		            draw_circle(chessx,chessy,BLUE);
-	          else
+		        draw_circle(chessx,chessy,BLUE);
+	    else
 		        draw_circle(chessx,chessy,RED);
         }
 	      break;
@@ -115,76 +115,77 @@ void play()/*五子棋游戏过程*/
 	    for(i=chessx,j=chessy+1;j<=19;j++)
             if(chess[i][j]==0)
             {
-		              draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
-		              draw_pixel(chessx,chessy,8);
+		  draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
+		  draw_pixel(chessx,chessy,8);
                   break ;
             }
-	    if(j>19)break ;
+	    if(j>19)
+	    	break ;
             chessy=j ;
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
-		              draw_circle(chessx,chessy,BLUE);
-	          else
-		              draw_circle(chessx,chessy,RED);
+		draw_circle(chessx,chessy,BLUE);
+	    else
+		draw_circle(chessx,chessy,RED);
         }
-	      break;
+	break;
         case UP :
 	      if(chessy-1<0)/*判断向上走是否出了棋盘*/
-            break;
+              		break;
         else
         {
-	          for(i=chessx,j=chessy-1;j>=1;j--)
+	    for(i=chessx,j=chessy-1;j>=1;j--)
             if(chess[i][j]==0)
             {
-		              draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
-			            draw_pixel(chessx,chessy,8);
+		  draw_circle(chessx,chessy,WHITE);/*去除棋子走过留下的痕迹*/
+		  draw_pixel(chessx,chessy,8);
                   break ;
             }
-	          if(j<1)break ;
+	    if(j<1)break ;
                   chessy=j ;
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
-		              draw_circle(chessx,chessy,BLUE);
-	          else
-		              draw_circle(chessx,chessy,RED);
+		  draw_circle(chessx,chessy,BLUE);
+	    else
+		  draw_circle(chessx,chessy,RED);
         }
-	      break;
+	break;
         case ESC :/*按ESC退出游戏*/
         break ;
         case SPACE :
 	      if(chessx>=1&&chessx<=19&&chessy>=1&&chessy<=19)/*判断棋子是否在棋盘范围内*/
-        {
-            if(chess[chessx][chessy]==0)/*判断该位置上是否有棋*/
-            {
-                chess[chessx][chessy]=flag ;/*若无棋则在该位置存入指定的棋子的flag值*/
-                if(result(chessx,chessy)==1)/*判断下完该棋子游戏是否结束*/
-                {
-                    if(flag==1)/*如果flag是1则蓝棋赢*/
-                    {
-                        cleardevice();
-			                  settextstyle(4,0,9);
-			                  outtextxy(80,200,"BLUE Win!");
-                        getch();
-                        closegraph();
-                        exit(0);
-                    }
-                    if(flag==2)/*如果flag是2则红棋赢*/
-                    {
-                        cleardevice();
-			                  settextstyle(4,0,9);
-			                  outtextxy(80,200,"Red Win!");
-                        getch();
-                        closegraph();
-                        exit(0);
-                    }
-                }
-               if(flag==1)/*若按下空格后游戏未结束则将棋的颜色改变*/
-                    flag=2 ;
-                else
-                    flag=1 ;
-                break ;
-            }
-        }
-        else
-        break ;
+              {
+            		if(chess[chessx][chessy]==0)/*判断该位置上是否有棋*/
+            		{
+                		chess[chessx][chessy]=flag ;/*若无棋则在该位置存入指定的棋子的flag值*/
+                		if(result(chessx,chessy)==1)/*判断下完该棋子游戏是否结束*/
+                		{
+                    			if(flag==1)/*如果flag是1则蓝棋赢*/
+                    			{
+                        			cleardevice();
+			                  	settextstyle(4,0,9);
+			                  	outtextxy(80,200,"BLUE Win!");
+                        			getch();
+                        			closegraph();
+                        			exit(0);
+                    			}
+	                    		if(flag==2)/*如果flag是2则红棋赢*/
+	                    		{
+	                        		cleardevice();
+				                settextstyle(4,0,9);
+				                outtextxy(80,200,"Red Win!");
+	                        		getch();
+	                        		closegraph();
+	                        		exit(0);
+	                    		}
+                		}
+		               if(flag==1)/*若按下空格后游戏未结束则将棋的颜色改变*/
+		                    flag=2 ;
+		                else
+		                    flag=1 ;
+		                break ;
+            		}
+        	}
+        	else
+        		break ;
     }
 }
 
