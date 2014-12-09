@@ -66,7 +66,7 @@ void play()/*五子棋游戏过程*/
     switch(key)
     {
         case LEFT :
-	      if(chessx-1<0)/*判断向左走是否出了棋盘*/
+	if(chessx-1<0)/*判断向左走是否出了棋盘*/
 	          break;
         else
         {
@@ -82,13 +82,13 @@ void play()/*五子棋游戏过程*/
             	 chessx=i ;
             	 if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
 		              draw_circle(chessx,chessy,BLUE);
-	          else
+	         else
 		              draw_circle(chessx,chessy,RED);
         }
 	      break;
         case RIGHT :
-	        if(chessx+1>19)/*判断向右走是否出了棋盘*/
-              		break ;
+	if(chessx+1>19)/*判断向右走是否出了棋盘*/
+              	break ;
         else
         {
 	        for(i=chessx+1,j=chessy;i<=19;i++)
@@ -108,7 +108,7 @@ void play()/*五子棋游戏过程*/
         }
 	      break;
         case DOWN :
-	      if((chessy+1)>19)/*判断向下走是否出了棋盘*/
+	if((chessy+1)>19)/*判断向下走是否出了棋盘*/
             break ;
         else
         {
@@ -125,12 +125,12 @@ void play()/*五子棋游戏过程*/
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
 		draw_circle(chessx,chessy,BLUE);
 	    else
-		draw_circle(chessx,chessy,RED);
+	        draw_circle(chessx,chessy,RED);
         }
 	break;
         case UP :
-	      if(chessy-1<0)/*判断向上走是否出了棋盘*/
-              		break;
+	if(chessy-1<0)/*判断向上走是否出了棋盘*/
+            break;
         else
         {
 	    for(i=chessx,j=chessy-1;j>=1;j--)
@@ -140,8 +140,9 @@ void play()/*五子棋游戏过程*/
 		  draw_pixel(chessx,chessy,8);
                   break ;
             }
-	    if(j<1)break ;
-                  chessy=j ;
+	    if(j<1)
+	    	  break ;
+            chessy=j ;
             if(flag==1)/*判断flag值来确定要画的棋子的颜色*/
 		  draw_circle(chessx,chessy,BLUE);
 	    else
@@ -199,7 +200,7 @@ int result(int x,int y)/*判断两种颜色的棋在不同方向的个数是否�
         n2=0 ;
         for(j=x,k=y;j>=1&&k>=1;j--,k--)
         {
-	          if(chess[j][k]==flag)
+	    if(chess[j][k]==flag)
                 n1++;
             else
                 break ;
@@ -234,8 +235,8 @@ int result(int x,int y)/*判断两种颜色的棋在不同方向的个数是否�
                 break ;
         }
         if(n1+n2-1>=5)
-		        return(1);
-	      n1=0 ;
+	       return(1);
+	n1=0 ;
         n2=0 ;
         /*水平向左*/
         for(j=x,k=y;j>=1;j--)
@@ -254,7 +255,7 @@ int result(int x,int y)/*判断两种颜色的棋在不同方向的个数是否�
                 break ;
         }
         if(n1+n2-1>=5)
-	          return(1);
+	        return(1);
 
         /*垂直向上*/
         n1=0 ;
@@ -301,13 +302,13 @@ void main()
 		            draw_circle(chessx,chessy,BLUE);
 	          else
 		            draw_circle(chessx,chessy,RED);
-            do
+                  do
 	          {
-                while(bioskey(1)==0);
-                key=bioskey(0);/*接收键盘按键*/
-	              play();/*调用play函数，进行五子棋游戏*/
-            }
-            while(key!=SPACE&&key!=ESC);/*当为ESC或空格时退出循环*/
+                	    while(bioskey(1)==0);
+                	    key=bioskey(0);/*接收键盘按键*/
+	                    play();/*调用play函数，进行五子棋游戏*/
+                  }
+                 hile(key!=SPACE&&key!=ESC);/*当为ESC或空格时退出循环*/
         }
         while(key!=ESC);
         closegraph();/*退出图形界面*/
