@@ -38,3 +38,31 @@ static void skel_delete(struct kref *kref)
 	kfree (dev->bulk_in_buffer);
 	kfree (dev);
 }
+
+static int skel_open(struct inode *inode, struct file *file)
+{
+	struct usb_skel *dev;
+	struct usb_interface *interface;
+	int subminor;
+	int retval = 0;
+	subminor = iminor(inode);
+	interface = usb_find_interface(&skel_driver, subminor);
+	if (!interface)
+	{
+		err ("%s - error, can't find device for minor %d",
+		     __FUNCTION__, subminor);
+		retval = -ENODEV;
+		goto exit;
+	}
+	dev = usb_get_intfdata(interface);
+	if (!dev) 
+	{
+		retval = -ENODEV;
+		goto exit;
+	}
+	kref_get(&dev->kref);
+	file->private_data = dev;
+	exit:
+	return retval;
+}
+
