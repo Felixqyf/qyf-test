@@ -75,3 +75,20 @@ static int skel_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
+static ssize_t skel_read(struct file *file, char __user *buffer, size_t count, loff_t *ppos)
+{
+	struct usb_skel *dev;
+	int retval = 0;
+	dev = (struct usb_skel *)file->private_data;
+	retval = usb_bulk_msg(dev->udev,usb_rcvbulkpipe(dev->udev, dev->bulk_in_endpointAddr),
+			      dev->bulk_in_buffer, min(dev->bulk_in_size, count),&count, HZ*10);
+	if (!retval) 
+	{
+		if (copy_to_user(buffer, dev->bulk_in_buffer, count))
+			retval = -EFAULT;
+		else
+			retval = count;
+	}
+
+	return retval;
+}
