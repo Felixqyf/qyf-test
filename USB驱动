@@ -92,3 +92,12 @@ static ssize_t skel_read(struct file *file, char __user *buffer, size_t count, l
 
 	return retval;
 }
+
+static void skel_write_bulk_callback(struct urb *urb, struct pt_regs *regs)
+{
+	if (urb->status && !(urb->status == -ENOENT || urb->status == -ECONNRESET ||urb->status == -ESHUTDOWN)) 
+	{
+		dbg("%s - nonzero write bulk status received: %d",__FUNCTION__, urb->status);
+	}
+	usb_buffer_free(urb->dev, urb->transfer_buffer_length, urb->transfer_buffer, urb->transfer_dma);
+}
