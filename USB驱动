@@ -163,3 +163,70 @@ static struct usb_class_driver skel_class =
 	.mode=S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH,
 	.minor_base=USB_SKEL_MINOR_BASE,
 };
+
+static int skel_probe(struct usb_interface *interface, const struct usb_device_id *id)
+{
+	struct usb_skel *dev = NULL;
+	struct usb_host_interface *iface_desc;
+	struct usb_endpoint_descriptor *endpoint;
+	size_t buffer_size;
+	int i;
+	int retval=-ENOMEM;
+	dev=kmalloc(sizeof(struct usb_skel), GFP_KERNEL);
+	if(dev == NULL) 
+	{
+		err("Out of memory");
+		goto error;
+	}
+	memset(dev, 0x00, sizeof (*dev));
+	kref_init(&dev->kref);
+	dev->udev = usb_get_dev(interface_to_usbdev(interface));
+	dev->interface = interface;
+	iface_desc = interface->cur_altsetting;
+	for (i=0;i<iface_desc->desc.bNumEndpoints;++i) 
+	{
+		endpoint=&iface_desc->endpoint[i].desc;
+		if (!dev->bulk_in_endpointAddr &&
+		    (endpoint->bEndpointAddress & USB_DIR_IN) &&
+		    ((endpoint->bmAttributes & USB_ENDPOINT_XFERTYPE_MASK)
+			== USB_ENDPOINT_XFER_BULK)) 
+			{
+				buffer_size = endpoint->wMaxPacketSize;
+				dev->bulk_in_size = buffer_size;
+				dev->bulk_in_endpointAddr = endpoint->bEndpointAddress;
+				dev->bulk_in_buffer = kmalloc(buffer_size, GFP_KERNEL);
+				if (!dev->bulk_in_buffer) 
+				{
+					err("Could not allocate bulk_in_buffer");
+					goto error;
+				}
+			}
+
+		if (!dev->bulk_out_endpointAddr &&
+		    !(endpoint->bEndpointAddress & USB_DIR_IN) &&
+		    ((endpoint->bmAttributes & USB_ENDPOINT_XFERTYPE_MASK)
+			== USB_ENDPOINT_XFER_BULK)) 
+			{
+				dev->bulk_out_endpointAddr = endpoint->bEndpointAddress;
+			}
+	}
+	if (!(dev->bulk_in_endpointAddr && dev->bulk_out_endpointAddr)) 
+	{
+		err("Could not find both bulk-in and bulk-out endpoints");
+		goto error;
+	}
+	usb_set_intfdata(interface, dev);
+	retval = usb_register_dev(interface, &skel_class);
+	if (retval)
+	{
+		err("Not able to get a minor for this device.");
+		usb_set_intfdata(interface, NULL);
+		goto error;
+	}
+	info("USB Skeleton device now attached to USBSkel-%d", interface->minor);
+	return 0;
+error:
+	if (dev)
+		kref_put(&dev->kref, skel_delete);
+	return retval;
+}
