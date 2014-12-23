@@ -230,3 +230,16 @@ error:
 		kref_put(&dev->kref, skel_delete);
 	return retval;
 }
+
+static void skel_disconnect(struct usb_interface *interface)
+{
+	struct usb_skel *dev;
+	int minor=interface->minor;
+	lock_kernel();
+	dev=usb_get_intfdata(interface);
+	usb_set_intfdata(interface, NULL);
+	usb_deregister_dev(interface, &skel_class);
+	unlock_kernel();
+	kref_put(&dev->kref, skel_delete);
+	info("USB Skeleton #%d now disconnected", minor);
+}
