@@ -243,3 +243,12 @@ static void skel_disconnect(struct usb_interface *interface)
 	kref_put(&dev->kref, skel_delete);
 	info("USB Skeleton #%d now disconnected", minor);
 }
+
+static struct usb_driver skel_driver = 
+{
+	.owner=THIS_MODULE,
+	.name="skeleton",
+	.id_table=skel_table,
+	.probe=skel_probe,
+	.disconnect=skel_disconnect,
+};
