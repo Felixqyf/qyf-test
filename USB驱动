@@ -252,3 +252,12 @@ static struct usb_driver skel_driver =
 	.probe=skel_probe,
 	.disconnect=skel_disconnect,
 };
+
+static int __init usb_skel_init(void)
+{
+	int result;
+	result = usb_register(&skel_driver);
+	if (result)
+		err("usb_register failed. Error number %d", result);
+	return result;
+}
