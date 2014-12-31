@@ -261,3 +261,13 @@ static int __init usb_skel_init(void)
 		err("usb_register failed. Error number %d", result);
 	return result;
 }
+
+static void __exit usb_skel_exit(void)
+{
+	usb_deregister(&skel_driver);
+}
+
+module_init (usb_skel_init);
+module_exit (usb_skel_exit);
+
+MODULE_LICENSE("GPL");
